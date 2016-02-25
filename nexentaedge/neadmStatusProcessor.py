@@ -1,7 +1,7 @@
 import re
 import subprocess
 
-from nexentaedge.settings import Settings
+from settings import Settings
 
 
 class NeadmStatusProcessor:
