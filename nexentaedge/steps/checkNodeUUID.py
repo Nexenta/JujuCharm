@@ -1,7 +1,7 @@
 import os
 import time
 
-from settings import Settings
+from nexentaedge.settings import Settings
 from baseConfigurationStep import BaseConfigurationStep
 
 

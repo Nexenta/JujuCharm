@@ -1,6 +1,6 @@
 import subprocess
 
-from settings import Settings
+from nexentaedge.settings import Settings
 from baseConfigurationStep import BaseConfigurationStep
 
 
