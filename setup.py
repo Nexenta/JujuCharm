@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
 from setuptools import setup, find_packages
-import nexentaedge_configurator
+import nexentaedge
 
-setup(name='nexentaedge_configurator',
-      version=nexentaedge_configurator.__version__,
+setup(name='nexentaedge',
+      version=nexentaedge.__version__,
       packages=find_packages(),
       description='NexentaEdge configuration package',
       author='Anton Skriptsov',

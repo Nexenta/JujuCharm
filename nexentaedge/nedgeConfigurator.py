@@ -2,18 +2,18 @@
 import subprocess
 import traceback
 
-from baseConfigurationStep import BaseConfigurationStep
-from nedeployRCConfig import NedeployRCConfig
-from nedeployBashActivation import NedeployBashActivation
-from nedeployInstall import NedeployInstall
-from nedeployPrecheck import NedeployPrecheck
-from neadmRCConfig import NeadmRCConfig
-from neadmInitWait import NeadmInitWait
-from neadmSystemInit import NeadmSystemInit
-from neadmLicenseActivation import NeadmLicenseActivation
-from neadmOnlineNodesWait import NeadmOnlineNodesWait
-from neadmClusterCreation import NeadmClusterCreation
-from waitNodeUUID import WaitNodeUUID
+from steps.baseConfigurationStep import BaseConfigurationStep
+from steps.nedeployRCConfig import NedeployRCConfig
+from steps.nedeployBashActivation import NedeployBashActivation
+from steps.nedeployInstall import NedeployInstall
+from steps.nedeployPrecheck import NedeployPrecheck
+from steps.neadmRCConfig import NeadmRCConfig
+from steps.neadmInitWait import NeadmInitWait
+from steps.neadmSystemInit import NeadmSystemInit
+from steps.neadmLicenseActivation import NeadmLicenseActivation
+from steps.neadmOnlineNodesWait import NeadmOnlineNodesWait
+from steps.neadmClusterCreation import NeadmClusterCreation
+from steps.waitNodeUUID import WaitNodeUUID
 
 
 class NedgeBaseConfigurator:
