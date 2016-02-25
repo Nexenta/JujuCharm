@@ -3,18 +3,6 @@ import subprocess
 
 from settings import Settings
 
-# import from charmhelpors folder
-parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-os.sys.path.insert(0, parentdir)
-from charmhelpers.core.host import (adduser,
-                                    add_user_to_group,
-                                    service_restart)
-
-from charmhelpers.core.templating import (render)
-from charmhelpers.fetch.archiveurl import ArchiveUrlFetchHandler
-os.sys.path.remove(parentdir)
-
-
 # returns NEDGE server UID
 def get_sid():
 
@@ -27,21 +15,6 @@ def get_sid():
             return line.strip()
 
     return None
-
-
-def configure_user(username='nexenta',
-                   password='$1$kh4S5TnK$0NKxf09T3TNj.W3ejTgGT1'):
-    adduser(username, password, shell='/bin/bash')
-    add_user_to_group(username, 'sudo')
-
-    # configure SSH for users
-    subprocess.call(
-        ['sed', '-i', '-e',
-         's/^.*PasswordAuthentication.*/PasswordAuthentication yes/g',
-         '/etc/ssh/sshd_config'])
-
-    # restart ssh service
-    service_restart('ssh')
 
 
 def if_up(ifname):
