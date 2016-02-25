@@ -2,7 +2,7 @@ import time
 
 from nexentaedge.settings import Settings
 from baseConfigurationStep import BaseConfigurationStep
-from utils import (get_sid)
+from nexentaedge.utils import (get_sid)
 
 
 class WaitNodeUUID(BaseConfigurationStep):
