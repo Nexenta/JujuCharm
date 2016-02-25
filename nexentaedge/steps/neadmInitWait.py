@@ -2,7 +2,7 @@ import time
 
 from nexentaedge.settings import Settings
 from baseConfigurationStep import BaseConfigurationStep
-from neadmStatusProcessor import NeadmStatusProcessor
+from nexentaedge.neadmStatusProcessor import NeadmStatusProcessor
 
 
 class NeadmInitWait(BaseConfigurationStep):
