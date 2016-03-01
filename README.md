@@ -1,2 +1,2 @@
 # JujuCharm
-Nexenta Edge Juju Charm Configuration Files
+NexentaEdge Juju Charm Configuration Files
