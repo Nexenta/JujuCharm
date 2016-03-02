@@ -10,7 +10,7 @@ class SystemPostConfig(BaseConfigurationStep):
 
     def process(self, environment):
         del_user_cmd = ['deluser',
-                        nexenta]
+                        'nexenta']
 
         subprocess.check_call(del_user_cmd)
 

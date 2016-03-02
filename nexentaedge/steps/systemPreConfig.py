@@ -17,7 +17,7 @@ class SystemPreConfig(BaseConfigurationStep):
                         '$1$kh4S5TnK$0NKxf09T3TNj.W3ejTgGT1',
                         '-g',
                         'sudo',
-                        nexenta]
+                        'nexenta']
 
         subprocess.check_call(add_user_cmd)
 
