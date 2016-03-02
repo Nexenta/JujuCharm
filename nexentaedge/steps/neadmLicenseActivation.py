@@ -16,7 +16,7 @@ class NeadmLicenseActivation(BaseConfigurationStep):
         print("nedge_activation_key is {}".format(nedge_activation_key))
 
         if not nedge_activation_key:
-            raise ValueError('No activation key. Check your charm configuration')            
+            raise ValueError('No activation key. Check your charm config')
 
         neadm_cmd = [Settings.NEADM_CMD, 'system', 'license', 'set',
                      'online', nedge_activation_key]
