@@ -14,10 +14,10 @@ class SystemPreConfig(BaseConfigurationStep):
                         '--shell',
                         '/bin/bash',
                         '--password',
-                        '$1$kh4S5TnK$0NKxf09T3TNj.W3ejTgGT1',
+                        Settings.NEDEPLOY_PASSWORD,
                         '-g',
                         'sudo',
-                        'nexenta']
+                        Settings.NEDEPLOY_USER]
 
         subprocess.check_call(add_user_cmd)
 

@@ -1,7 +1,7 @@
 import os
-import subprocess
 
 from settings import Settings
+
 
 # returns NEDGE server UID
 def get_sid():

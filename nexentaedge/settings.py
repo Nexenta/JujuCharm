@@ -38,3 +38,6 @@ class Settings:
                          "nedeploy/{0}".format(NEDEPLOY_FILE_NAME)
     NEADM_REPO_PATH = "https://prodpkg.nexenta.com/nedge/"\
                       "neadm/{0}".format(NEADM_FILE_NAME)
+
+    NEDEPLOY_USER = 'nexenta'
+    NEDEPLOY_PASSWORD = '$1$kh4S5TnK$0NKxf09T3TNj.W3ejTgGT1'
