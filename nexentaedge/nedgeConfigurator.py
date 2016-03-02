@@ -14,6 +14,8 @@ from steps.neadmLicenseActivation import NeadmLicenseActivation
 from steps.neadmOnlineNodesWait import NeadmOnlineNodesWait
 from steps.neadmClusterCreation import NeadmClusterCreation
 from steps.waitNodeUUID import WaitNodeUUID
+from steps.systemPreConfig import SystemPreConfig
+from steps.systemPostConfig import SystemPostConfig
 
 
 class NedgeBaseConfigurator:
@@ -41,17 +43,19 @@ class NedgeBaseConfigurator:
             return False
         except Exception as e:
             print("Nedge configuration failed. Terminating")
-            print('Exception in {}'.format(e.message))
+            print('{}'.format(e.message))
             print('Traceback in {}'.format(traceback.format_exc()))
             return False
 
 
 class NedgeNodeConfigurator(NedgeBaseConfigurator):
-    _steps = [NedeployRCConfig(),
+    _steps = [SystemPreConfig(),
+              NedeployRCConfig(),
               NedeployBashActivation(),
               NedeployPrecheck(),
               NedeployInstall(),
-              WaitNodeUUID()]
+              WaitNodeUUID(),
+              SystemPostConfig()]
 
     def __init__(self, environment={}):
         environment['node_type'] = 'data'
@@ -60,11 +64,13 @@ class NedgeNodeConfigurator(NedgeBaseConfigurator):
 
 
 class NedgeGatewayConfigurator(NedgeBaseConfigurator):
-    _steps = [NedeployRCConfig(),
+    _steps = [SystemPreConfig(),
+              NedeployRCConfig(),
               NedeployBashActivation(),
               NedeployPrecheck(),
               NedeployInstall(),
-              WaitNodeUUID()]
+              WaitNodeUUID(),
+              SystemPostConfig()]
 
     def __init__(self, environment={}):
         environment['node_type'] = 'gateway'
@@ -74,6 +80,7 @@ class NedgeGatewayConfigurator(NedgeBaseConfigurator):
 
 class NedgeMgmtConfigurator(NedgeBaseConfigurator):
     _steps = [
+        SystemPreConfig(),
         NedeployRCConfig(),
         NedeployBashActivation(),
         NedeployPrecheck(),
@@ -85,7 +92,8 @@ class NedgeMgmtConfigurator(NedgeBaseConfigurator):
         NeadmLicenseActivation(),
         NeadmOnlineNodesWait(),
         NeadmClusterCreation(),
-        WaitNodeUUID()
+        WaitNodeUUID(),
+        SystemPostConfig()
     ]
 
     def __init__(self, environment={}):
