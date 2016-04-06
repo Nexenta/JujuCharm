@@ -10,7 +10,6 @@ class NeadmOnlineNodesWait(BaseConfigurationStep):
         pass
 
     def process(self, environment):
-        print('[{}]'.format(self.__class__.__name__))
 
         nedge_node_count = environment['nedge_node_count']
         print("\tnedge_node_count : {}".format(nedge_node_count))

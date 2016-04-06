@@ -14,7 +14,6 @@ class NeadmClusterCreation(BaseConfigurationStep):
         nedge_tenant_name = environment['nedge_tenant_name']
         nedge_bucket_name = environment['nedge_bucket_name']
 
-        print('[{}]'.format(self.__class__.__name__))
         print('\tnedge_cluster_name : {}'.format(nedge_cluster_name))
         print('\tnedge_tenant_name : {}'.format(nedge_tenant_name))
         print('\tnedge_bucket_name : {}'.format(nedge_bucket_name))

@@ -13,6 +13,7 @@ from steps.neadmSystemInit import NeadmSystemInit
 from steps.neadmLicenseActivation import NeadmLicenseActivation
 from steps.neadmOnlineNodesWait import NeadmOnlineNodesWait
 from steps.neadmClusterCreation import NeadmClusterCreation
+from steps.waitAuditService import WaitAuditService
 from steps.waitNodeUUID import WaitNodeUUID
 from steps.systemPreConfig import SystemPreConfig
 from steps.systemPostConfig import SystemPostConfig
@@ -29,8 +30,8 @@ class NedgeBaseConfigurator:
         try:
             for step in self.steps:
                 if isinstance(step, BaseConfigurationStep):
-                    print("Processing {} step".format(step.__class__.__name__))
                     # configuration step virtual method
+                    step.print_step_name()
                     step.process(self.environment)
                 else:
                     print('WARNING: There is unknown object'
@@ -54,6 +55,7 @@ class NedgeNodeConfigurator(NedgeBaseConfigurator):
               NedeployBashActivation(),
               NedeployPrecheck(),
               NedeployInstall(),
+              WaitAuditService(),
               WaitNodeUUID(),
               SystemPostConfig()]
 
@@ -69,6 +71,7 @@ class NedgeGatewayConfigurator(NedgeBaseConfigurator):
               NedeployBashActivation(),
               NedeployPrecheck(),
               NedeployInstall(),
+              WaitAuditService(),
               WaitNodeUUID(),
               SystemPostConfig()]
 
@@ -85,6 +88,7 @@ class NedgeMgmtConfigurator(NedgeBaseConfigurator):
         NedeployBashActivation(),
         NedeployPrecheck(),
         NedeployInstall(),
+        WaitAuditService(),
         NeadmRCConfig(),
         NeadmInitWait(),
         NeadmSystemInit(),

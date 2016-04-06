@@ -12,7 +12,6 @@ class NeadmSystemInit(BaseConfigurationStep):
 
     def process(self, environment):
 
-        print('[{}]'.format(self.__class__.__name__))
         print("\t cmd is {0}".format(' '.join(NeadmSystemInit._neadm_cmd)))
         subprocess.check_output(NeadmSystemInit._neadm_cmd,
                                 stderr=subprocess.STDOUT,

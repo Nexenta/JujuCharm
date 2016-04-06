@@ -12,7 +12,6 @@ class NedeployBashActivation(BaseConfigurationStep):
 
     def process(self, environment):
 
-        print('[{}]'.format(self.__class__.__name__))
         print("\tChanging dash to bash shell")
 
         remove_cmd = ['rm', '/bin/sh']

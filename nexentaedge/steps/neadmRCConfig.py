@@ -11,7 +11,6 @@ class NeadmRCConfig(BaseConfigurationStep):
     def process(self, environment):
         node_private_ip = environment['node_private_ip']
 
-        print('[{}]'.format(self.__class__.__name__))
         print("\nnode_private_ip is: {}".format(node_private_ip))
 
         # change blank ip to mgmt node's private ip address

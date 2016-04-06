@@ -1,4 +1,5 @@
 import subprocess
+import time
 
 from nexentaedge.settings import Settings
 from baseConfigurationStep import BaseConfigurationStep
@@ -29,7 +30,6 @@ class NedeployInstall(BaseConfigurationStep):
                                 stderr=subprocess.STDOUT,
                                 universal_newlines=True)
 
-        print('[{}]'.format(self.__class__.__name__))
         print("\tnode_private_ip : {}".format(node_private_ip))
         print("\tnode_type      : {}".format(node_type))
         print("\treplicast_eth  : {}".format(replicast_eth))

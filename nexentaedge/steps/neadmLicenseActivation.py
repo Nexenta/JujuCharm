@@ -12,7 +12,6 @@ class NeadmLicenseActivation(BaseConfigurationStep):
 
         nedge_activation_key = environment['nedge_activation_key']
 
-        print('[{}]'.format(self.__class__.__name__))
         print("nedge_activation_key is {}".format(nedge_activation_key))
 
         if not nedge_activation_key:
