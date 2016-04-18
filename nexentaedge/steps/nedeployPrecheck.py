@@ -31,7 +31,7 @@ class NedeployPrecheck(BaseConfigurationStep):
             blockers = self.get_blockers(ex.output)
             raise NedgeBlockerException(blockers)
 
-    def get_blockers(error_output):
+    def get_blockers(self, error_output):
 
         results = []
         for pattern in blocker_patterns:
