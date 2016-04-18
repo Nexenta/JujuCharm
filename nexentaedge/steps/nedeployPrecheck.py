@@ -45,7 +45,7 @@ class NedeployPrecheck(BaseConfigurationStep):
     def create_precheck_cmd(self, environment):
 
 
-        activation_key = environment['activation_key']
+        activation_key = environment['nedge_activation_key']
         node_private_ip = environment['node_private_ip']
         node_type = environment['node_type']
         replicast_eth = environment['replicast_eth']
