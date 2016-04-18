@@ -6,7 +6,7 @@ from nexentaedge.nedgeBlockerException import NedgeBlockerException
 from baseConfigurationStep import BaseConfigurationStep
 
 blocker_patterns = ['^.*(Less\s+then\s+\d+.*disks)$',
-                    '^.*(Interface.*missing)$',
+                    '^.*(Interface.*missing).*$',
                     '^.*(Network interface too slow)$'
                     ]
 
