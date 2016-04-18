@@ -7,7 +7,8 @@ from baseConfigurationStep import BaseConfigurationStep
 
 blocker_patterns = ['^.*(Less\s+then\s+\d+.*disks)$',
                     '^.*(Interface.*missing).*$',
-                    '^.*(Network interface too slow)$'
+                    '^.*(Network interface too slow)$',
+                    '^.*(Not enough RAM memory.*GB).*$'
                     ]
 
 
