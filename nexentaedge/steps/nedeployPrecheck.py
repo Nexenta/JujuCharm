@@ -38,6 +38,7 @@ class NedeployPrecheck(BaseConfigurationStep):
             m = re.search(pattern, error_output, re.MULTILINE)
             if m:
                 results.append(m.group(1))
+                print('MATCHED {}'.format(m.group(1)))
         return results
 
     def create_precheck_cmd(self, environment):

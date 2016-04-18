@@ -49,6 +49,7 @@ class NedgeBaseConfigurator:
             return False
         except NedgeBlockerException as nbe:
             print('Got blocker configuration exception')
+            print(nbe.blockers)
             self.blockers = nbe.blockers
             return False
         except Exception as e:
