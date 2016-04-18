@@ -44,6 +44,8 @@ class NedeployPrecheck(BaseConfigurationStep):
 
     def create_precheck_cmd(self, environment):
 
+
+        activation_key = environment['activation_key']
         node_private_ip = environment['node_private_ip']
         node_type = environment['node_type']
         replicast_eth = environment['replicast_eth']
@@ -66,6 +68,8 @@ class NedeployPrecheck(BaseConfigurationStep):
 
         if node_type == 'mgmt':
             neadmCmd.append('-m')
+            if not activation_key:
+                raise NedgeBlockerException(['No activation key is provided'])
         elif node_type == 'gateway':
             # ADD GATEWAY parameter to deploy solo cmd
             print("Gateway type selected!! ")
