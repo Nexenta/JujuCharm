@@ -57,7 +57,7 @@ class NedgeBaseConfigurator:
             print('Traceback in {}'.format(traceback.format_exc()))
             return False
 
-    def get_blockers():
+    def get_blockers(self):
         return self.blockers
     
 class NedgeNodeConfigurator(NedgeBaseConfigurator):
