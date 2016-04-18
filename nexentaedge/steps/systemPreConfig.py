@@ -9,17 +9,22 @@ class SystemPreConfig(BaseConfigurationStep):
         pass
 
     def process(self, environment):
-        add_user_cmd = ['useradd',
-                        '--create-home',
-                        '--shell',
-                        '/bin/bash',
-                        '--password',
-                        Settings.NEDEPLOY_PASSWORD,
-                        '-g',
-                        'sudo',
-                        Settings.NEDEPLOY_USER]
+        try:
+            add_user_cmd = ['useradd',
+                            '--create-home',
+                            '--shell',
+                            '/bin/bash',
+                            '--password',
+                            Settings.NEDEPLOY_PASSWORD,
+                            '-g',
+                            'sudo',
+                            Settings.NEDEPLOY_USER]
 
-        subprocess.check_call(add_user_cmd)
+            subprocess.check_call(add_user_cmd)
+        except subprocess.CalledProcessError as cpe:
+            print('WARNING!\nMessage:\n{0}\nTrace:\n{1}\nOutput:\n{2}'
+                  .format(cpe.message, traceback.format_exc(), cpe.output))
+
 
         # configure SSH for users
         subprocess.call(

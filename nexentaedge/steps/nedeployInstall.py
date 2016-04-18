@@ -1,5 +1,4 @@
 import subprocess
-import time
 
 from nexentaedge.settings import Settings
 from baseConfigurationStep import BaseConfigurationStep

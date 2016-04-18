@@ -2,6 +2,7 @@
 import subprocess
 import traceback
 
+from nedgeBlockerException import NedgeBlockerException
 from steps.baseConfigurationStep import BaseConfigurationStep
 from steps.nedeployRCConfig import NedeployRCConfig
 from steps.nedeployBashActivation import NedeployBashActivation
@@ -23,9 +24,13 @@ class NedgeBaseConfigurator:
     def __init__(self, environment={}, steps=[]):
         self.environment = environment
         self.steps = steps
+        self.blockers = []
 
     def configure(self):
         print('Configuration started')
+            
+        #reset blockers
+        self.blockers = []
 
         try:
             for step in self.steps:
@@ -41,6 +46,10 @@ class NedgeBaseConfigurator:
         except subprocess.CalledProcessError as cpe:
             print('Failed!\nMessage:\n{0}\nTrace:\n{1}\nOutput:\n{2}'
                   .format(cpe.message, traceback.format_exc(), cpe.output))
+            return False
+        except NedgeBlockerException as nbe:
+            print('Got blocker configuration exception')
+            self.blockers = nbe.blockers
             return False
         except Exception as e:
             print("Nedge configuration failed. Terminating")

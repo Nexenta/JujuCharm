@@ -16,9 +16,9 @@ class Settings:
 
     # in seconds
     NEADM_INIT_TIMEOUT = 9000
-    
+
     # max timeout before auditserv online status, seconds
-    NEDEPLOY_INIT_TIMEOUT = 300 
+    NEDEPLOY_INIT_TIMEOUT = 300
 
     # sleep interval in seconds for waiting loops
     SLEEP_INTERVAL = 10
@@ -38,7 +38,6 @@ class Settings:
         NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
     NEADM_FILE_NAME = "neadm-linux_{0}-{1}_x64.tar.gz".format(
         NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
-
 
     #NEDEPLOY_REPO_PATH = "http://10.3.30.163/nedge-dev/"\
     #                     "nedeploy/{0}/{1}".format(NEDGE_BUILD_NUMBER, NEDEPLOY_FILE_NAME)
