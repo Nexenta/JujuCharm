@@ -13,7 +13,7 @@ class FirewallCheck(BaseConfigurationStep):
         remote_urls = ['https://www.chef.io',
                        'http://ppa.launchpad.net',
                        'https://prodpkg.nexenta.com',
-                       'https://packages2.chef.io'
+                       'https://packages.chef.io'
                        ]
 
         for url in remote_urls:
