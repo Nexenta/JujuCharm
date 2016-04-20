@@ -1,3 +1,4 @@
+import traceback
 import subprocess
 
 from nexentaedge.settings import Settings
