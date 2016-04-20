@@ -25,7 +25,7 @@ class FirewallCheck(BaseConfigurationStep):
                                         universal_newlines=True)
 
             except subprocess.CalledProcessError as ex:
-                blocker = "{} is unreachable. Check firewall rules."
+                blocker = "{} is unreachable. Check firewall rules.".format(url)
                 print(blocker)
                 print("Reason: {}".format(ex.output))
                 raise NedgeBlockerException([blocker])
