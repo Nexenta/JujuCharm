@@ -3,6 +3,7 @@ import subprocess
 import traceback
 
 from nedgeBlockerException import NedgeBlockerException
+from steps.firewallCheck import FirewallCheck
 from steps.baseConfigurationStep import BaseConfigurationStep
 from steps.nedeployRCConfig import NedeployRCConfig
 from steps.nedeployBashActivation import NedeployBashActivation
@@ -62,7 +63,8 @@ class NedgeBaseConfigurator:
         return self.blockers
     
 class NedgeNodeConfigurator(NedgeBaseConfigurator):
-    _steps = [SystemPreConfig(),
+    _steps = [FirewallCheck(),
+              SystemPreConfig(),
               NedeployRCConfig(),
               NedeployBashActivation(),
               NedeployPrecheck(),
@@ -78,7 +80,8 @@ class NedgeNodeConfigurator(NedgeBaseConfigurator):
 
 
 class NedgeGatewayConfigurator(NedgeBaseConfigurator):
-    _steps = [SystemPreConfig(),
+    _steps = [FirewallCheck(),
+              SystemPreConfig(),
               NedeployRCConfig(),
               NedeployBashActivation(),
               NedeployPrecheck(),
@@ -95,6 +98,7 @@ class NedgeGatewayConfigurator(NedgeBaseConfigurator):
 
 class NedgeMgmtConfigurator(NedgeBaseConfigurator):
     _steps = [
+        FirewallCheck(),
         SystemPreConfig(),
         NedeployRCConfig(),
         NedeployBashActivation(),

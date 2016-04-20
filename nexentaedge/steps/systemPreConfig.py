@@ -26,7 +26,6 @@ class SystemPreConfig(BaseConfigurationStep):
             print('WARNING!\nMessage:\n{0}\nTrace:\n{1}\nOutput:\n{2}'
                   .format(cpe.message, traceback.format_exc(), cpe.output))
 
-
         # configure SSH for users
         subprocess.call(
             ['sed', '-i', '-e',
