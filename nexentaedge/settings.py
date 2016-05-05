@@ -33,10 +33,12 @@ class Settings:
     KEYSTONE_ADMIN_PORT = 8080
 
     # NEDGE and NEADM repos settings
-    NEDEPLOY_FILE_NAME = "nedeploy-linux_{0}-{1}_x64.tar.gz".format(
-        NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
-    NEADM_FILE_NAME = "neadm-linux_{0}-{1}_x64.tar.gz".format(
-        NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
+    NEDEPLOY_FILE_NAME = "nedeploy-linux_latest_x64.tar.gz"
+    NEADM_FILE_NAME = "neadm-linux_latest_x64.tar.gz"
+    #NEDEPLOY_FILE_NAME = "nedeploy-linux_{0}-{1}_x64.tar.gz".format(
+    #    NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
+    #NEADM_FILE_NAME = "neadm-linux_{0}-{1}_x64.tar.gz".format(
+    #    NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
 
     #NEDEPLOY_REPO_PATH = "http://10.3.30.163/nedge-dev/"\
     #                     "nedeploy/{0}/{1}".format(NEDGE_BUILD_NUMBER, NEDEPLOY_FILE_NAME)

@@ -10,8 +10,8 @@ class NedeployRCConfig(BaseConfigurationStep):
 
     def process(self, environment):
 
-        build_version = Settings.NEDGE_BUILD_NUMBER
-        print('\tbuild_version : {}'.format(build_version))
+        #build_version = Settings.NEDGE_BUILD_NUMBER
+        #print('\tbuild_version : {}'.format(build_version))
 
         sub_str = 's/APT_REPO=.*/APT_REPO=https:\/\/'\
                   'prodpkg.nexenta.com\/nedge\/ubuntu14/g'
