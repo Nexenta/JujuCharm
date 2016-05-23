@@ -11,6 +11,12 @@ class SystemPreConfig(BaseConfigurationStep):
 
     def process(self, environment):
         try:
+
+            #change root password
+            root_pwd = ['usermod', '-p', Settings.NEDEPLOY_PASSWORD, 'root']
+            subprocess.check_call(root_pwd)
+
+            '''
             add_user_cmd = ['useradd',
                             '--create-home',
                             '--shell',
@@ -22,6 +28,8 @@ class SystemPreConfig(BaseConfigurationStep):
                             Settings.NEDEPLOY_USER]
 
             subprocess.check_call(add_user_cmd)
+            '''
+        
         except subprocess.CalledProcessError as cpe:
             print('WARNING!\nMessage:\n{0}\nTrace:\n{1}\nOutput:\n{2}'
                   .format(cpe.message, traceback.format_exc(), cpe.output))
@@ -30,6 +38,12 @@ class SystemPreConfig(BaseConfigurationStep):
         subprocess.call(
             ['sed', '-i', '-e',
              's/^.*PasswordAuthentication.*/PasswordAuthentication yes/g',
+             '/etc/ssh/sshd_config'])
+
+        #permit root ssh access, will be disabled after deployment
+        subprocess.call(
+            ['sed', '-i', '-e',
+             's/^.*PermitRootLogin.*/PermitRootLogin yes/g',
              '/etc/ssh/sshd_config'])
 
         # restart ssh service

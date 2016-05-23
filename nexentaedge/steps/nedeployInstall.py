@@ -1,4 +1,5 @@
 import subprocess
+import sys
 
 from nexentaedge.settings import Settings
 from baseConfigurationStep import BaseConfigurationStep
@@ -38,7 +39,7 @@ class NedeployInstall(BaseConfigurationStep):
         print("\treserved       : {}".format(reserved))
 
         neadmCmd = [Settings.NEDEPLOY_CMD, 'deploy', 'solo',
-                    node_private_ip, 'nexenta:nexenta', '-i',
+                    node_private_ip, 'root:nexenta', '-i',
                     replicast_eth]
 
         if node_type == 'mgmt':
