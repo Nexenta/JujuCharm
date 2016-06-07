@@ -40,11 +40,6 @@ class Settings:
     #NEADM_FILE_NAME = "neadm-linux_{0}-{1}_x64.tar.gz".format(
     #    NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
 
-    #NEDEPLOY_REPO_PATH = "http://10.3.30.163/nedge-dev/"\
-    #                     "nedeploy/{0}/{1}".format(NEDGE_BUILD_NUMBER, NEDEPLOY_FILE_NAME)
-    #NEADM_REPO_PATH = "http://10.3.30.163/nedge-dev/"\
-    #                  "neadm/{0}/{1}".format(NEDGE_BUILD_NUMBER, NEADM_FILE_NAME)
-
     NEDEPLOY_REPO_PATH = "https://prodpkg.nexenta.com/nedge/"\
                          "nedeploy/{0}".format(NEDEPLOY_FILE_NAME)
     NEADM_REPO_PATH = "https://prodpkg.nexenta.com/nedge/"\

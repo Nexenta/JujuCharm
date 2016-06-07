@@ -29,7 +29,7 @@ class NedgeBaseConfigurator:
 
     def configure(self):
         print('Configuration started')
-            
+
         #reset blockers
         self.blockers = []
 
@@ -61,7 +61,8 @@ class NedgeBaseConfigurator:
 
     def get_blockers(self):
         return self.blockers
-    
+
+
 class NedgeNodeConfigurator(NedgeBaseConfigurator):
     _steps = [FirewallCheck(),
               SystemPreConfig(),

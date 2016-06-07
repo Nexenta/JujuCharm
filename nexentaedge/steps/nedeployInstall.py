@@ -1,5 +1,4 @@
 import subprocess
-import sys
 
 from nexentaedge.settings import Settings
 from baseConfigurationStep import BaseConfigurationStep

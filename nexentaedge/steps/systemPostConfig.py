@@ -1,6 +1,5 @@
 import subprocess
 
-from nexentaedge.settings import Settings
 from baseConfigurationStep import BaseConfigurationStep
 
 
@@ -20,7 +19,6 @@ class SystemPostConfig(BaseConfigurationStep):
             ['sed', '-i', '-e',
              's/^.*PasswordAuthentication.*/PasswordAuthentication no/g',
              '/etc/ssh/sshd_config'])
-
 
         subprocess.call(
             ['sed', '-i', '-e',
