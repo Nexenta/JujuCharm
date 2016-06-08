@@ -21,39 +21,50 @@ class SystemPreConfig(BaseConfigurationStep):
         f.write(content)
         f.close()
 
-    def check_interface_exist(self, content, interface_name):
-        match_pattern = r"(.*iface\s+{}\s+inet.*)".format(interface_name)
-        if re.search(match_pattern, content, re.DOTALL):
+    def is_requested_iface(self, line, interface_name):
+        match_pattern = r".*iface\s+({})\s+inet.*".format(interface_name)
+        if re.search(match_pattern, line):
             return True
         return False
 
-    def check_mtu_exist(self, content, interface_name):
-        match_pattern = r"(.*iface\s+{}\s+inet.*)(mtu\s+\d+)(.*)"\
-                        .format(interface_name)
-        if re.search(match_pattern, content, re.DOTALL):
+    def is_mtu_line(self, line):
+        match_pattern = r".*mtu\s+(\d+).*"
+        if re.search(match_pattern, line):
             return True
         return False
 
-    def set_mtu(self, content, interface_name):
+    def change_mtu(self, content, interface_name):
 
-        if not self.check_interface_exist(content, interface_name):
-            return content
+        lines = content.split('\n')
+        print('Array of {} lines'.format(len(lines)))
 
-        if self.check_mtu_exist(content, interface_name):
-            match_pattern = r"(.*iface\s+{}\s+inet.*)(mtu\s+\d+)(.*)"\
-                            .format(interface_name)
-            replace_pattern = r"\1mtu 9000\3"
+        search_results = {'iface_position': None, 'mtu_position': None}
+        search_mode = 'find_iface'
+        #iterate over lines, try to find iface with requested name
+        for (index, line) in enumerate(lines):
+            if search_mode == 'find_iface':
+                if self.is_requested_iface(line, interface_name):
+                    search_results['iface_position'] = index
+                    search_mode = 'find_mtu'
+                    #print('Interface found at {} line'.format(index))
+            else:
+                check = line.strip(' \t\n\r')
+                if len(check) == 0:
+                    #print('iface block finished')
+                    break
+                if self.is_mtu_line(line):
+                    #print('mtu found at {} line'.format(index))
+                    search_results['mtu_position'] = index
+                    break
 
-        else:
-            match_pattern = r"(.*iface\s+{}\s+inet\s+(?:manual|static))(.*)"\
-                            .format(interface_name)
-            replace_pattern = r"\1\n    mtu 9000\2"
+        if search_results['iface_position']:
+            mtu = '    mtu 9000'
+            if search_results['mtu_position']:
+                lines[search_results['mtu_position']] = mtu
+            else:
+                lines.insert(search_results['iface_position'] + 1, mtu)
 
-        content = re.sub(match_pattern,
-                         replace_pattern,
-                         content,
-                         flags=re.M | re.DOTALL)
-        return content
+        return '\n'.join(lines)
 
     def process(self, environment):
         try:
@@ -62,7 +73,7 @@ class SystemPreConfig(BaseConfigurationStep):
             interface_name = environment['replicast_eth']
 
             content = self.read_file_to_str(config_file)
-            self.set_mtu(content, interface_name)
+            content = self.change_mtu(content, interface_name)
             self.write_file(content, config_file)
 
             #change root password
