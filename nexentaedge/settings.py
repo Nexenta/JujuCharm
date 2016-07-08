@@ -24,21 +24,21 @@ class Settings:
     SLEEP_INTERVAL = 10
 
     # NEDGE_BUILD_NUMBER
-    NEDGE_BUILD_NUMBER = 2107
+    NEDGE_BUILD_NUMBER = 2339
 
-    NEDGE_BUILD_VERSION = "1.1.0.1"
+    NEDGE_BUILD_VERSION = "1.1.0.3"
 
     # SWIFT SETTINGS
     KEYSTONE_PORT = 9981
     KEYSTONE_ADMIN_PORT = 8080
 
     # NEDGE and NEADM repos settings
-    NEDEPLOY_FILE_NAME = "nedeploy-linux_latest_x64.tar.gz"
-    NEADM_FILE_NAME = "neadm-linux_latest_x64.tar.gz"
-    #NEDEPLOY_FILE_NAME = "nedeploy-linux_{0}-{1}_x64.tar.gz".format(
-    #    NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
-    #NEADM_FILE_NAME = "neadm-linux_{0}-{1}_x64.tar.gz".format(
-    #    NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
+    #NEDEPLOY_FILE_NAME = "nedeploy-linux_latest_x64.tar.gz"
+    #NEADM_FILE_NAME = "neadm-linux_latest_x64.tar.gz"
+    NEDEPLOY_FILE_NAME = "nedeploy-linux_{0}-{1}_x64.tar.gz".format(
+        NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
+    NEADM_FILE_NAME = "neadm-linux_{0}-{1}_x64.tar.gz".format(
+        NEDGE_BUILD_VERSION, NEDGE_BUILD_NUMBER)
 
     NEDEPLOY_REPO_PATH = "https://prodpkg.nexenta.com/nedge/"\
                          "nedeploy/{0}".format(NEDEPLOY_FILE_NAME)
