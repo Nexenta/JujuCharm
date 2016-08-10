@@ -1,80 +1,96 @@
 import traceback
-import re
+import glob
+import os
 import subprocess
+
+from nexentaedge.iface_parser import IfaceParser, IfaceBlock, SourceBlock, SourceDirectoryBlock, AutoBlock
 
 from nexentaedge.settings import Settings
 from baseConfigurationStep import BaseConfigurationStep
 
 
 class SystemPreConfig(BaseConfigurationStep):
-    def __init__(self):
-        pass
 
-    def read_file_to_str(self, filepath):
-        f = open(filepath, "r")
-        content = f.read()
-        f.close()
-        return content
+    def manage_replicast_interface(self, interface_name):
+        new_blocks = []
+        p = IfaceParser()
+        for i in range(len(p.blocks) - 1, -1, -1):
+            block = p.blocks[i]
+            if isinstance(block, SourceDirectoryBlock):
+                for file_ in os.listdir(block.path):
+                    full_path = os.path.join(block.path, file_)
+                    if os.path.isfile(full_path):
+                        child = IfaceParser(full_path)
+                        new_blocks += child.blocks
+                del p.blocks[i]
+            elif isinstance(block, SourceBlock):
+                for file_ in glob.glob(block.file_path):
+                    if os.path.isfile(file_):
+                        child = IfaceParser(file_)
+                        new_blocks += child.blocks
+                del p.blocks[i]
 
-    def write_file(self, content, filepath):
-        f = open(filepath, "w")
-        f.write(content)
-        f.close()
+        for block in new_blocks:
+            p.blocks.append(block)
 
-    def is_requested_iface(self, line, interface_name):
-        match_pattern = r".*iface\s+({})\s+inet.*".format(interface_name)
-        if re.search(match_pattern, line):
-            return True
-        return False
-
-    def is_mtu_line(self, line):
-        match_pattern = r".*mtu\s+(\d+).*"
-        if re.search(match_pattern, line):
-            return True
-        return False
-
-    def change_mtu(self, content, interface_name):
-
-        lines = content.split('\n')
-        print('Array of {} lines'.format(len(lines)))
-
-        search_results = {'iface_position': None, 'mtu_position': None}
-        search_mode = 'find_iface'
-        #iterate over lines, try to find iface with requested name
-        for (index, line) in enumerate(lines):
-            if search_mode == 'find_iface':
-                if self.is_requested_iface(line, interface_name):
-                    search_results['iface_position'] = index
-                    search_mode = 'find_mtu'
-                    #print('Interface found at {} line'.format(index))
-            else:
-                check = line.strip(' \t\n\r')
-                if len(check) == 0:
-                    #print('iface block finished')
-                    break
-                if self.is_mtu_line(line):
-                    #print('mtu found at {} line'.format(index))
-                    search_results['mtu_position'] = index
+        found = False
+        for block in p.blocks:
+            if isinstance(block, IfaceBlock):
+                if block.name == interface_name:
+                    block.params['mtu'] = '9000'
+                    found = True
                     break
 
-        if search_results['iface_position']:
-            mtu = '    mtu 9000'
-            if search_results['mtu_position']:
-                lines[search_results['mtu_position']] = mtu
-            else:
-                lines.insert(search_results['iface_position'] + 1, mtu)
+        if not found:
+            block = AutoBlock()
+            block.ifaces.append(interface_name)
+            p.blocks.append(block)
 
-        return '\n'.join(lines)
+            block = IfaceBlock()
+            block.name = interface_name
+            block.address_type = 'inet'
+            block.service_type = 'static'
+            block.params['address'] = '0.0.0.0'
+            block.params['mtu'] = '9000'
+            block.params['netmask'] = '255.255.255.0'
+            p.blocks.append(block)
+
+        p.save()
+
+        # Only for Fuel
+        #path = '/etc/network/interfaces.d/ifcfg-' + interface_name
+        #if os.path.exists(path):
+        #    os.remove(path)
+        #repl_parser = IfaceParser(path)
+        #block = AutoBlock()
+        #block.ifaces.append(interface_name)
+        #repl_parser.blocks.append(block)
+
+        #block = IfaceBlock()
+        #block.name = interface_name
+        #block.address_type = 'inet'
+        #block.service_type = 'static'
+        #block.params['address'] = '0.0.0.0'
+        #block.params['mtu'] = '9000'
+        #block.params['netmask'] = '255.255.255.0'
+        #repl_parser.blocks.append(block)
+        #repl_parser.save()
+
+
+        # restart the interface
+        try:
+            root_pwd = ['ifdown', interface_name]
+            subprocess.check_call(root_pwd)
+        except Exception, e:
+            print('Could not ifdown interface <{}>. {}. Ignoring'.format(interface_name, e))
+        root_pwd = ['ifup', interface_name]
+        subprocess.check_call(root_pwd)
 
     def process(self, environment):
         try:
-            #set mtu settings for /etc/networ/interfaces
-            config_file = '/etc/network/interfaces'
+            #set mtu settings for /etc/network/interfaces
             interface_name = environment['replicast_eth']
-
-            content = self.read_file_to_str(config_file)
-            content = self.change_mtu(content, interface_name)
-            self.write_file(content, config_file)
+            self.manage_replicast_interface(interface_name)
 
             #change root password
             root_pwd = ['usermod', '-p', Settings.NEDEPLOY_PASSWORD, 'root']
@@ -83,19 +99,3 @@ class SystemPreConfig(BaseConfigurationStep):
         except subprocess.CalledProcessError as cpe:
             print('WARNING!\nMessage:\n{0}\nTrace:\n{1}\nOutput:\n{2}'
                   .format(cpe.message, traceback.format_exc(), cpe.output))
-
-        # configure SSH for users
-        subprocess.call(
-            ['sed', '-i', '-e',
-             's/^.*PasswordAuthentication.*/PasswordAuthentication yes/g',
-             '/etc/ssh/sshd_config'])
-
-        #permit root ssh access, will be disabled after deployment
-        subprocess.call(
-            ['sed', '-i', '-e',
-             's/^.*PermitRootLogin.*/PermitRootLogin yes/g',
-             '/etc/ssh/sshd_config'])
-
-        # restart ssh service
-        restart_cmd = ['service', 'ssh', 'restart']
-        subprocess.check_call(restart_cmd)

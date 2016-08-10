@@ -80,7 +80,10 @@ class NeadmStatus:
         self.output = ""
 
     def is_correct(self):
-        return True if self.exit_code == 0 else False
+        return self.exit_code == 0 and \
+               filter(
+                   lambda node: node['type'] == '[MGMT]' and
+                   node['status'] == 'ONLINE', self.nodes)
 
     def get_nedge_nodes(self):
         return self.nodes

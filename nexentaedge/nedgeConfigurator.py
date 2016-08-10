@@ -18,6 +18,7 @@ from steps.neadmClusterCreation import NeadmClusterCreation
 from steps.waitAuditService import WaitAuditService
 from steps.waitNodeUUID import WaitNodeUUID
 from steps.systemPreConfig import SystemPreConfig
+from steps.sshConfig import SSHConfig
 from steps.systemPostConfig import SystemPostConfig
 
 
@@ -66,6 +67,7 @@ class NedgeBaseConfigurator:
 class NedgeNodeConfigurator(NedgeBaseConfigurator):
     _steps = [FirewallCheck(),
               SystemPreConfig(),
+              SSHConfig(),
               NedeployRCConfig(),
               NedeployBashActivation(),
               NedeployPrecheck(),
@@ -83,6 +85,7 @@ class NedgeNodeConfigurator(NedgeBaseConfigurator):
 class NedgeGatewayConfigurator(NedgeBaseConfigurator):
     _steps = [FirewallCheck(),
               SystemPreConfig(),
+              SSHConfig(),
               NedeployRCConfig(),
               NedeployBashActivation(),
               NedeployPrecheck(),
@@ -101,6 +104,7 @@ class NedgeMgmtConfigurator(NedgeBaseConfigurator):
     _steps = [
         FirewallCheck(),
         SystemPreConfig(),
+        SSHConfig(),
         NedeployRCConfig(),
         NedeployBashActivation(),
         NedeployPrecheck(),

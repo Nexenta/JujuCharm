@@ -271,7 +271,7 @@ class NeadmServiceList:
 
     # is node presented in service already
     def is_already_in_service(self, service_name, sid):
-        return True if filter(lambda service: service['sid'] == sid and
+        return True if filter(lambda service: sid in service['sid'] and
                               service['name'] == service_name,
                               self.service_records) else False
 
